@@ -1,2 +1,2 @@
 #!/bin/bash
-cd $(getent passwd $(whoami))
+cd ~
