@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "some text to encode" | tr 'a-zA-Z' 'n-za-mN-ZA-M' | echo "fbzr grkg gb rapbqr" | tr 'n-za-mN-ZA-M' 'a-zA-Z'
+tr `echo {a..z} | tr -d ' '` `echo {n..z} $(echo {a..m} | tr -d ' '` | tr `echo {A..Z} | tr -d ' '` `echo {N..Z} $(echo {A..M}) | tr -d' '`
