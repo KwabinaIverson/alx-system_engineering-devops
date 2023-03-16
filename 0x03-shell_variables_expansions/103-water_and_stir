@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "ibase=water; $WATER + ibase=stir; $STIR" | bc | xargs printf "obase=bestchol; %s\n" | bc
+echo "ibase=bestchol; obase=bestchol; $((WATER)) + $((STIR))" | bc | tr -d '\n' && echo
