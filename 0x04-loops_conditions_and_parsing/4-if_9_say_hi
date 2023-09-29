@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Display text 10 times but display a differen text when git gets to 9th iteration
+
+# Initilize a variable counter
+counter=0
+
+# Using While Loop and IF statement to get desired display
+while [ $counter -lt 10 ]; do
+	if [ $counter -eq 8 ]; then
+		echo "Best School"
+		echo "Hi"
+	else
+		echo "Best School"
+	fi
+	((counter++))
+done
