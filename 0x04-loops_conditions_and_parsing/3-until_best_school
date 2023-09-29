@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Display test tem time using Until Loop
+
+# Initilize variable counter
+counter=0
+
+# Using Untile Loop to display text
+until [ $counter -ge 10 ]; do
+	echo "Best School"
+	((counter++))
+done
