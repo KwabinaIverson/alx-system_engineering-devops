@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Bash script that display text using while loop
+
+# Initialize a varible counter
+counter=0
+
+# While Loop that displays text
+while [ $counter -lt 10 ]; do
+	echo "Best School"
+	((counter++))
+done
