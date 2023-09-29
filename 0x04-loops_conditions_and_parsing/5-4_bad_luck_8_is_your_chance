@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Display different text on 4th and 8th position
+
+# Initialize a variable counter
+counter=1
+
+# Using While Loop to achive result
+while [ $counter -le 10 ]; do
+	if [ $counter -eq 4 ]; then
+		echo "bad luck"
+	elif [ $counter -eq 8 ]; then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi
+
+	((counter++))
+done
