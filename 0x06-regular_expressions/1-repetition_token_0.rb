@@ -7,7 +7,7 @@ if ARGV.length != 1
 end
 
 # Define the regular expression pattern
-pattern = /School/
+pattern = /\w+t{2,5}+n/
 
 # Get the input text from the command line argument
 text = ARGV[0]
