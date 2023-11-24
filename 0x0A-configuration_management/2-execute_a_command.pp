@@ -1,0 +1,5 @@
+# 2-execute_a_command.pp
+
+exec { 'kill_killmenow_process':
+  command => 'pkill -f killmenow',
+}
