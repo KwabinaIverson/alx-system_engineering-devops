@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# SSH connection script
+
+# Server details
+server="52.205.98.105"
+user="ubuntu"
+private_key="~/.ssh/school"
+
+# SSH connection
+ssh -i "$private_key" "$user"@"$server"
