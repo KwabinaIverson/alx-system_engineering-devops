@@ -2,7 +2,7 @@
 
 # Check for correct number of parameters
 if [ "$#" -ne 4]; then
-    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
     exit 1
 fi
 
@@ -13,4 +13,11 @@ username=$3
 ssh_key=$4
 
 # Transfer the file using scp
-scp -i "$ssh_key" -o StrictHostKeyChecking=no "$file_path" "$username@$server_ip":~/
+scp -o "StrictHostKeyChecking no" -i "$ssh_key" "$file_path" "$username@$server_ip:~/"
+
+# Check if the scp command was successful
+if [ "$?" -eq 0 ]; then
+    echo "File transferred successfully."
+else
+    echo "Error transferring file."
+fi
