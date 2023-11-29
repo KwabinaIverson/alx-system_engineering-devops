@@ -2,10 +2,5 @@
 
 # SSH connection script
 
-# Server details
-server="54.146.15.171"
-user="ubuntu"
-private_key="~/.ssh/school"
-
 # SSH connection
-ssh -i "$private_key" "$user"@"$server"
+ssh -i ~/.ssh/school ubuntu@54.146.15.171
