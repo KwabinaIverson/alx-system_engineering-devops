@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Bash script that connect to a webserver
+
+# Credentials
+ssh_key="~/.ssh/school"
+username="ubuntu"
+host_ip="54.146.15.171"
+
+# Connection
+ssh -i "$ssh_key" "$username"@"$host_ip"
