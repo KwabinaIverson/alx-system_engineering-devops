@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Update the package list
+sudo apt update
+
+# Install Nginx
+sudo apt install -y nginx
+
+# Stop the default Nginx service
+sudo systemctl stop nginx
+
+# Configure Nginx to add the custom HTTP response header
+sudo cat << EOF > /etc/nginx/nginx.conf
+http {
+    server {
+        listen 80;
+        server_name $(hostname);
+
+        # Add the custom HTTP response header
+        add_header X-Served-By $(hostname);
+
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $(host);
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+EOF
+
+# Restart the Nginx service
+sudo systemctl restart nginx
+
+# Verify that the custom HTTP response header is being added
+curl -sI $(hostname) | grep X-Served-By
