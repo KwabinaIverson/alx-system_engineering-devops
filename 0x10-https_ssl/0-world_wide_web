@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Shows information about subdomains.
+
+domain_information() {
+    local domain="$1"
+    local subdomain="$2"
+    local ip_address
+    ip_address=$(dig +short "$subdomain.$domain")
+
+    if [ -n "$ip_address" ]; then
+        echo "The subdomain $subdomain is a A rocord and point to $ip_address"
+    else
+        echo "No information found for the subdomain $subdomain"
+    fi
+}
+
+if [ "$#" -eq 1 ]; then
+    domain_information "$1" "www"
+    domain_information "$1" "lb-01"
+    domain_information "$1" "web-01"
+    domain_information "$1" "web-02"
+elif [ "$#" -eq 2 ]; then
+    domain_information "$1" "$2"
+fi
