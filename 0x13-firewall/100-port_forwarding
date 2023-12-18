@@ -1,0 +1,26 @@
+# Update the package list
+sudo apt-get update
+
+# Install UFW if it is not already installed
+sudo apt-get install ufw
+
+# Allow incoming HTTP traffic on port 80
+sudo ufw allow 80/tcp
+
+# Allow incoming SSH traffic on port 22 (if not allowed already)
+sudo ufw allow 22/tcp
+
+# Deny incoming traffic on port 8080 (to be redirected)
+sudo ufw deny 8080/tcp
+
+# Set up the redirection rule from port 8080 to port 80
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+
+# Create the /etc/iptables directory if it doesn't exist
+sudo mkdir -p /etc/iptables
+
+# Save the iptables rules to /etc/iptables/rules.v4
+sudo sh -c 'iptables-save > /etc/iptables/rules.v4'
+
+# Enable UFW
+sudo ufw enable
