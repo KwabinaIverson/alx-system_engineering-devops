@@ -37,12 +37,9 @@ def get_employee_todo(employee_id):
 
     with open(csv_file_name, mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
-        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
         for task in todos_data:
             csv_writer.writerow([employee_id, employee_name, str(task["completed"]), task["title"]])
-
-    print(f"Data exported to {csv_file_name}")
 
 if __name__ == "__main__":
     if len(argv) != 2 or not argv[1].isdigit():
