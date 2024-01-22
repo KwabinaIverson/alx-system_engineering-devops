@@ -1,0 +1,62 @@
+**Issue Summary:**
+- **Duration:** January 15, 2024, 10:00 AM - 2:00 PM (UTC)
+- **Impact:**
+  - The authentication service was down, leading to users being unable to log in.
+  - Approximately 30% of users were affected, resulting in service unavailability and frustrated users.
+
+**Root Cause:**
+The root cause of the outage was identified as an expired SSL certificate for the authentication service.
+
+**Timeline:**
+- **10:00 AM:** The issue was detected through automated monitoring alerts indicating a spike in authentication failures.
+- **10:15 AM:** Investigation began, focusing on recent changes and possible database issues.
+- **11:00 AM:** Misleading paths explored, including a database rollback that did not resolve the issue.
+- **12:00 PM:** Incident escalated to the infrastructure team for further analysis.
+- **1:30 PM:** Root cause identified as an expired SSL certificate.
+- **2:00 PM:** SSL certificate renewed, and services were restored.
+
+**Root Cause and Resolution:**
+- **Root Cause:**
+  - The SSL certificate used for the authentication service had expired, causing secure connections to fail.
+
+- **Resolution:**
+  - The immediate fix was to renew the SSL certificate for the authentication service.
+  - Automation was introduced using Puppet to ensure timely certificate renewals in the future.
+
+**Corrective and Preventative Measures:**
+- **To Improve/Fix:**
+  - Implement more robust monitoring for SSL certificate expiration.
+  - Schedule regular checks for critical services and their dependencies.
+  - Establish a process for automated certificate renewal.
+
+- **Tasks:**
+  - Implement Puppet code for automated SSL certificate renewal.
+  - Enhance monitoring scripts to include SSL certificate expiration checks.
+  - Conduct a review of critical services to identify and address potential single points of failure.
+
+**0-strace_is_your_friend.pp: Puppet Automation for SSL Certificate Renewal:**
+```puppet
+# 0-strace_is_your_friend.pp
+
+# Define a Puppet exec resource to renew the SSL certificate
+exec { 'renew_ssl_certificate':
+  command => '/usr/bin/certbot renew',
+  onlyif  => '/usr/bin/test /usr/local/etc/ssl/certs/auth_cert.pem -lt $(date -d "+30 days" +%s)',
+  path    => ['/usr/bin', '/bin'],
+  require => Package['certbot'], # Ensure certbot is installed before renewal
+}
+
+# Ensure certbot package is installed
+package { 'certbot':
+  ensure => 'installed',
+}
+```
+
+**Usage:**
+```bash
+# Apply the Puppet manifest for SSL certificate renewal
+sudo puppet apply 0-strace_is_your_friend.pp
+```
+
+**Conclusion:**
+The outage was a result of an overlooked SSL certificate expiration. By promptly identifying and resolving the issue, implementing automation for certificate renewal, and enhancing monitoring practices, we have taken steps to prevent similar incidents in the future. Continuous improvements and proactive measures will be adopted to maintain a resilient and reliable web stack.
